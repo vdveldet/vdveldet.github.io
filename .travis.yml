@@ -52,6 +52,7 @@ deploy:
       skip_cleanup: true
       github_token: $GH_TOKEN
       local_dir: doc/_build/html
+      target_branch: master
       on:
-        branch: master
+        branch: source
         python: 3.5
