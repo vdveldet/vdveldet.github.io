@@ -1,0 +1,67 @@
+language: python
+sudo: false
+dist: xenial
+cache:
+  directories:
+    - ~/.cache/pip
+
+matrix:
+  exclude:
+      - python:
+          - "3.6"
+          - "3.7"
+env:
+  global:
+    - PIP_WHEEL_DIR=$HOME/.cache/pip/wheels
+    - PIP_FIND_LINKS=file://$HOME/.cache/pip/wheels
+
+python:
+  - "3.5"
+  - "3.6"
+  - "3.7"
+# - "nightly"
+
+# script:
+#   - pytest --cov
+
+before_install:
+  # - export CPPFLAGS=`gdal-config --cflags`
+  # - export LDFLAGS=`gdal-config --libs`
+  # - export PROJ_LIB=/usr/share/proj
+
+install:
+  - pip install -r doc-requirements.txt
+
+addons:
+  apt:
+    sources:
+    - sourceline: 'ppa:ubuntugis/ubuntugis-unstable'
+    packages:
+    - libgdal-dev
+    - gdal-bin
+    - pandoc  # for generating documentation from jupyter notebook
+
+# after_success:
+# - coveralls || echo "coveralls failure"
+
+before_deploy:
+  - pip install -r doc-requirements.txt
+  - "if [[ $TRAVIS_PYTHON_VERSION == 3.5 ]]; then sphinx-build docs -a doc/_build/html;fi"
+
+deploy:
+    - user: vdvelde
+      distributions: sdist bdist_wheel
+      provider: pypi
+      on:
+         condition: "$RASTERIO_VERSION=0.36.0"
+      true:
+        python: 3.5
+        repo: vdveldet/vdveldet
+        tags: true
+    - provider: pages
+      skip_cleanup: true
+      github_token: $GH_TOKEN
+      local_dir: doc/_build/html
+      on:
+        branch: master
+        python: 3.5
