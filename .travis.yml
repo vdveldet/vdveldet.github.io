@@ -13,7 +13,7 @@ python:
 
 
 script:
-  - ls -l ./vdveldet/vdveldet.github.io
+  - ls -l 
   - sphinx-build ./vdveldet/vdveldet.github.io/ -c ./vdveldet/vdveldet.github.io/ -b html -a doc/_build/html
 
 before_install:
