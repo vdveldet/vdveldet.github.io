@@ -13,7 +13,7 @@ python:
 
 
 script:
-  - echo "1"
+  - sphinx-build docs -a doc/_build/html
 
 before_install:
   # - export CPPFLAGS=`gdal-config --cflags`
