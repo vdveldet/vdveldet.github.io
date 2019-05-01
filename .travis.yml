@@ -14,7 +14,7 @@ python:
 
 script:
   - ls -l
-  - sphinx-build . -b html -a doc/_build/html
+  - sphinx-build . -b html -a doc/_build/html # this will build the pages
 
 before_install:
   # - export CPPFLAGS=`gdal-config --cflags`
@@ -36,17 +36,17 @@ install:
 # after_success:
 # - coveralls || echo "coveralls failure"
 
-before_deploy:
-  - pip install -r doc-requirements.txt
-  - sphinx-build docs -a doc/_build/html
+# before_deploy:
+#   - pip install -r doc-requirements.txt
+#   - sphinx-build docs -a doc/_build/html
 
 deploy:
-    - user: vdvelde
+    - user: vdveldet
       distributions: sdist bdist_wheel
       provider: pypi
       true:
         python: 3.5
-        repo: vdveldet/vdveldet
+        repo: vdveldet/vdveldet.github.io
         tags: true
     - provider: pages
       skip_cleanup: true
