@@ -1,9 +1,7 @@
 language: python
 sudo: false
 dist: xenial
-cache:
-  directories:
-    - ~/.cache/pip
+cache: pip
 
 env:
   global:
@@ -14,8 +12,8 @@ python:
   - "3.5"
 
 
-# script:
-#   - pytest --cov
+script:
+  - echo "1"
 
 before_install:
   # - export CPPFLAGS=`gdal-config --cflags`
