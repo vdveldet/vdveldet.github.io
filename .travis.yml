@@ -5,11 +5,6 @@ cache:
   directories:
     - ~/.cache/pip
 
-matrix:
-  exclude:
-      - python:
-          - "3.6"
-          - "3.7"
 env:
   global:
     - PIP_WHEEL_DIR=$HOME/.cache/pip/wheels
@@ -17,9 +12,7 @@ env:
 
 python:
   - "3.5"
-  - "3.6"
-  - "3.7"
-# - "nightly"
+
 
 # script:
 #   - pytest --cov
@@ -32,28 +25,26 @@ before_install:
 install:
   - pip install -r doc-requirements.txt
 
-addons:
-  apt:
-    sources:
-    - sourceline: 'ppa:ubuntugis/ubuntugis-unstable'
-    packages:
-    - libgdal-dev
-    - gdal-bin
-    - pandoc  # for generating documentation from jupyter notebook
+# addons:
+#   apt:
+#     sources:
+#     - sourceline: 'ppa:ubuntugis/ubuntugis-unstable'
+#     packages:
+#     - libgdal-dev
+#     - gdal-bin
+#     - pandoc  # for generating documentation from jupyter notebook
 
 # after_success:
 # - coveralls || echo "coveralls failure"
 
 before_deploy:
   - pip install -r doc-requirements.txt
-  - "if [[ $TRAVIS_PYTHON_VERSION == 3.5 ]]; then sphinx-build docs -a doc/_build/html;fi"
+  - sphinx-build docs -a doc/_build/html
 
 deploy:
     - user: vdvelde
       distributions: sdist bdist_wheel
       provider: pypi
-      on:
-         condition: "$RASTERIO_VERSION=0.36.0"
       true:
         python: 3.5
         repo: vdveldet/vdveldet
