@@ -13,7 +13,7 @@ python:
 
 
 script:
-  - sphinx-build vdveldet/vdveldet.github.io -a doc/_build/html
+  - sphinx-build vdveldet/vdveldet.github.io/ -b html -a doc/_build/html
 
 before_install:
   # - export CPPFLAGS=`gdal-config --cflags`
