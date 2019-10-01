@@ -10,6 +10,7 @@ Welcome to Infodot's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   modsecurity/nginx
 
 
 Indices and tables
